@@ -1,0 +1,30 @@
+{% extends "admin.html.twig" %}
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+{% block body %}
+<h1>
+    {% if editMode %}
+        Modification d'un blog
+    {% else %}
+        Ajout d'un blog
+    {% endif %}
+</h1>
+
+{{ form_start(form) }}
+{{ form_row(form.title, {'label': 'Titre', 'attr': {'placeholder': 'Titre'}}) }}
+{{ form_row(form.text, {'label': 'Texte', 'attr': {'placeholder': 'Texte'}}) }}
+{% if editMode %}
+<img width="200" src="{{ asset('assets/uploads/' ~ blog.data.name) }}" alt="Card image">
+{% endif %}
+{{ form_row(form.data.name, {'label': 'Choisir un fichier', (editMode) ? 'required': false : ''}) }}
+
+<button type="submit" class="btn btn-outline-success">
+    {% if editMode %}
+        Modifier
+    {% else %}
+        Ajouter
+    {% endif %}
+</button>
+
+{{ form_end(form) }}
+
+{% endblock body %}
