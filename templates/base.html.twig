@@ -4,7 +4,9 @@
     <body>
         {% set currentPath = path(app.request.attributes.get('_route'),app.request.attributes.get('_route_params')) %}
         {% include 'header.html.twig' %}
-        {% block body %}{% endblock %}
+        <main role="main-inner-wrapper" class="container">
+            {% block body %}{% endblock %}
+        </main>
         {% include 'footer.html.twig' %}
     </body>
 </html>

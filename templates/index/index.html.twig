@@ -1,113 +1,102 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-<!-- main -->
 
-<main role="main-home-wrapper" class="container">
+<div class="row">
 
-        	
+        <section class="col-xs-12 col-sm-6 col-md-6 col-lg-6 ">
 
-        <div class="row">
+            <article role="pge-title-content">
+
+                <header>
+
+                    <h2><span>Sagaf</span><span>Youssouf</span> My works.</h2>
+
+                </header>
+
+                <p>Welcome to my Homepage.</p>
+                <p>I hope you will find to find every thing you want to know about me in this portfolio.</p>
+
+            </article>
+
+        </section>
 
         
+        {% set i = 0 %}
+        {% set start = false %}
+        {% for work in works %}
 
-            <section class="col-xs-12 col-sm-6 col-md-6 col-lg-6 ">
+        {% if i == 0 %}
+        <section class="col-xs-12 col-sm-6 col-md-6 col-lg-6 grid">
 
-                <article role="pge-title-content">
+            <figure class="effect-oscar">
 
-                    <header>
+                    <img src="{{ asset('assets/uploads/' ~ work.data.name) }}" alt="{{ work.title }}" class="img-responsive"/>
 
-                        <h2><span>Sagaf</span><span>Youssouf</span> My works.</h2>
+                <figcaption>
 
-                    </header>
+                        <h2>{{ work.title }}</h2>
 
-                    <p>Welcome to my Homepage.</p>
-                    <p>I hope you will find to find every thing you want to know about me in this portfolio.</p>
+                        <a href="{{ path('index_work', {'id': work.id}) }}">View more</a>
 
-                </article>
+                </figcaption>
 
-            </section>
+            </figure>
 
-            
+        </section>
+        {% endif %}
 
-            <section class="col-xs-12 col-sm-6 col-md-6 col-lg-6 grid">
+        {% if i > 0 %}
+        {% if i == 1 %}
+        <div class="clearfix"></div>
+        {% endif %}
 
-                <figure class="effect-oscar">
+        {% if i % 8 == 0 and not start %}
+        <section class="col-xs-12 col-sm-6 col-md-6 col-lg-6 grid">
 
-                    <img src="/assets/images/home-images/image-1.jpg" alt="" class="img-responsive"/>
+            <ul class="grid-lod effect-2" id="grid">
+
+        {% endif %}
+                
+
+                <li>
+
+                    <figure class="effect-oscar">
+
+                    <img src="{{ asset('assets/uploads/' ~ work.data.name) }}" alt="{{ work.title }}" class="img-responsive"/>
 
                     <figcaption>
 
-                        <h2>Eliana Dedda<span> Identity</span></h2>
+                        
 
-                        <p>Personal Brand Identity.</p>
+                            <h2>{{ work.title }}</h2>
 
-                        <a href="works-details.html">View more</a>
+                            <a href="{{ path('index_work', {'id': work.id}) }}">View more</a>
+
+                        
 
                     </figcaption>
 
                 </figure>
 
-            </section>
+                </li>
 
-            
+        {% if start %}
+            </ul>
 
-            <div class="clearfix"></div>
+        </section>
 
-            {% set i = 0 %}
-            {% set start = false %}
-            {% for work in works %}
+        {% set start = false %}
+        {% elseif i % 8 == 0 %}
+        {% set start = true %}
+        {% endif %}
+        {% endif %}
 
-            {% if i % 8 == 0 and not start %}
-            <section class="col-xs-12 col-sm-6 col-md-6 col-lg-6 grid">
+        {% set i = i + 1 %}
+        {% endfor %}
 
-                <ul class="grid-lod effect-2" id="grid">
+        <div class="clearfix"></div>
 
-            {% endif %}
-                    
+    </div>
 
-                    <li>
-
-                        <figure class="effect-oscar">
-
-                        <img src="/assets/images/home-images/image-2.jpg" alt="" class="img-responsive"/>
-
-                        <figcaption>
-
-                            
-
-                                <h2>{{ work.title }}</h2>
-
-                                <p>{{ work.description }}</p>
-
-                                <a href="works-details.html">View more</a>
-
-                            
-
-                        </figcaption>
-
-                    </figure>
-
-                    </li>
-
-            {% if start %}
-                </ul>
-
-            </section>
-
-            {% set start = false %}
-            {% elseif i % 8 == 0 %}
-            {% set start = true %}
-            {% endif %}
-
-            {% set i = i + 1 %}
-            {% endfor %}
-
-            <div class="clearfix"></div>
-
-        </div>
-
-    </main>
-
-    <!-- main -->
 {% endblock %}

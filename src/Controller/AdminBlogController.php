@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Blog;
 use App\Form\BlogType;
+use App\Entity\Comment;
 use App\Repository\BlogRepository;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,7 +20,7 @@ class AdminBlogController extends AbstractController
     /**
      * @Route("/admin/blogs", name="admin_blogs")
      */
-    public function index(blogRepository $repo)
+    public function index(BlogRepository $repo)
     {
         $blogs = $repo->findAll();
         return $this->render('admin_blog/index.html.twig', [
@@ -88,23 +89,39 @@ class AdminBlogController extends AbstractController
             return $this->redirectToRoute('admin_blogs');
         }
 
+        $comments = $blog->getComments();
+
         return $this->render('admin_blog/manage.html.twig', [
             'form' => $form->createView(),
             'editMode' => $editMode,
-            'blog' => $blog
+            'blog' => $blog,
+            'comments' => $comments
         ]);
     }
 
     /**
      * @Route("/admin/blogs/{id}/delete", name="admin_blogs_delete")
      */
-    public function delete(blog $blog, ObjectManager $manager, Filesystem $fileSystem)
+    public function delete(Blog $blog, ObjectManager $manager, Filesystem $fileSystem)
     {
         $fileSystem->remove($this->getParameter('data_directory').'/'.$blog->getData()->getName());
         $manager->remove($blog);
         $manager->flush();
-        $this->addFlash('success', 'blog supprimé');
+        $this->addFlash('success', 'Blog supprimé');
         return $this->redirectToRoute('admin_blogs');
+    }
+
+    /**
+     * @Route("/admin/blogs/{id_blog}/comment/{id}/delete", name="admin_blogs_comment_delete")
+     */
+    public function deleteComment(Blog $blog, Comment $comment, ObjectManager $manager, Filesystem $fileSystem)
+    {
+        $manager->remove($comment);
+        $manager->flush();
+        $this->addFlash('success', 'Commentaire supprimé');
+        return $this->redirectToRoute('admin_blogs_edit', array(
+            'id_blog' => $blog
+        ));
     }
 
     /**

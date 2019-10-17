@@ -2,18 +2,31 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Entity\Work;
+use App\Repository\WorkRepository;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class IndexController extends AbstractController
 {
     /**
      * @Route("/", name="index")
      */
-    public function index()
+    public function index(WorkRepository $repo)
     {
+        $works = $repo->findAll();
         return $this->render('index/index.html.twig', [
-            
+            'works' => $works
+        ]);
+    }
+
+    /**
+     * @Route("/work/{id}", name="index_work")
+     */
+    public function indexWork(Work $work)
+    {
+        return $this->render('index/work.html.twig', [
+            'work' => $work
         ]);
     }
 

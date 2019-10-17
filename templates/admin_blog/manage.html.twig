@@ -27,4 +27,51 @@
 
 {{ form_end(form) }}
 
+{% if editMode %}
+<h3>Commentaires</h3>
+<table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col">Nom</th>
+        <th scope="col">Prénom</th>
+        <th scope="col">Date</th>
+        <th scope="col">Commentaire</th>
+        <th scope="col">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% set i = 0 %}
+      {% for comment in comments %}
+      <tr class="{{ i%2 == 0 ? 'table-active' : '' }}">
+        <th scope="row">{{ comment.name }}</th>
+        <td>{{ comment.firstName }}</td>
+        <td>{{ comment.date|date("d/m/Y") }}</td>
+        <td>{{ comment.text }}</td>
+        <td><a href="#" class="card-link text-danger" data-toggle="modal" data-target="#delete{{ i }}">Supprimer</a></td>
+      </tr>
+      <div class="modal" id="delete{{ i }}" tabindex="-1" role="dialog" aria-labelledby="delete" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Supprimer</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Voulez-vous vraiment supprimer le commentaire de {{ comment.name }} {{ comment.firstName }} ?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <a href="{{ path('admin_blogs_comment_delete', {'id_blog': blog.id, 'id': comment.id}) }}" class="btn btn-primary">Confirmer</a>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+      {% set i = i + 1 %}
+      {% endfor %}
+    </tbody>
+</table>
+{% endif %}
+
 {% endblock body %}
