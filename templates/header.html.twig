@@ -1,0 +1,41 @@
+<!-- header -->
+
+<header role="header">
+
+    <div class="container">
+
+        <!-- logo -->
+
+            <h1>
+
+                <a href="{{ path('index') }}" title="Home"><img id="logo" src="/assets/images/logo.png" title="Home" alt="Home"/></a>
+
+            </h1>
+
+        <!-- logo -->
+
+        <!-- nav -->
+
+        <nav role="header-nav" class="navy">
+
+            <ul>
+
+                <li class="{{ currentPath == path('index') ? 'nav-active' : '' }}"><a href="{{ path('index') }}" title="Work">Work</a></li>
+
+                <li class="{{ currentPath == path('about') ? 'nav-active' : '' }}"><a href="{{ path('about') }}" title="About">About</a></li>
+
+                <li class="{{ currentPath == path('blog') ? 'nav-active' : '' }}"><a href="{{ path('blog') }}" title="Blog">Blog</a></li>
+
+                <li class="{{ currentPath == path('contact') ? 'nav-active' : '' }}"><a href="{{ path('contact') }}" title="Contact">Contact</a></li>
+
+            </ul>
+
+        </nav>
+
+        <!-- nav -->
+
+    </div>
+
+</header>
+
+<!-- header -->
