@@ -51,8 +51,8 @@
         <div class="clearfix"></div>
         {% endif %}
 
-        {% if i % 8 == 0 and not start %}
-        <section class="col-xs-12 col-sm-6 col-md-6 col-lg-6 grid">
+        {% if (i - 1) % 8 == 0 and not start %}
+        <section class="col-xs-12 col-sm-6 col-md-6 col-lg-6 grid reorganize">
 
             <ul class="grid-lod effect-2" id="grid">
 
@@ -63,7 +63,7 @@
 
                     <figure class="effect-oscar">
 
-                    <img src="{{ asset('assets/uploads/' ~ work.data.name) }}" alt="{{ work.title }}" class="img-responsive"/>
+                    <img  src="{{ asset('assets/uploads/' ~ work.data.name) }}" alt="{{ work.title }}" class="img-responsive"/>
 
                     <figcaption>
 
@@ -87,13 +87,19 @@
         </section>
 
         {% set start = false %}
-        {% elseif i % 8 == 0 %}
+        {% elseif (i + 1) % 8 == 0 %}
         {% set start = true %}
         {% endif %}
         {% endif %}
 
         {% set i = i + 1 %}
         {% endfor %}
+
+        {% if (i - 1) % 8 != 0 and i > 1 %}
+            </ul>
+
+        </section>
+        {% endif %}
 
         <div class="clearfix"></div>
 

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Work;
+use App\Repository\BlogRepository;
 use App\Repository\WorkRepository;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -43,10 +44,11 @@ class IndexController extends AbstractController
     /**
      * @Route("/blog", name="blog")
      */
-    public function blog()
+    public function blog(BlogRepository $repo)
     {
+        $blogs = $repo->findAll();
         return $this->render('index/blog.html.twig', [
-            
+            'blogs' => $blogs
         ]);
     }
 
