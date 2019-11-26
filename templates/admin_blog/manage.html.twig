@@ -62,7 +62,7 @@
                         <p>Voulez-vous vraiment supprimer le commentaire de {{ comment.name }} {{ comment.firstName }} ?</p>
                     </div>
                     <div class="modal-footer">
-                        <a href="{{ path('admin_blogs_comment_delete', {'id_blog': blog.id, 'id': comment.id}) }}" class="btn btn-primary">Confirmer</a>
+                        <a href="{{ path('admin_blogs_comment_delete', {'id': comment.id}) }}" class="btn btn-primary">Confirmer</a>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
                     </div>
                 </div>

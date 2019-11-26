@@ -5,6 +5,14 @@
         {% set currentPath = path(app.request.attributes.get('_route'),app.request.attributes.get('_route_params')) %}
         {% include 'header.html.twig' %}
         <main role="main-inner-wrapper" class="container">
+            {% for label, messages in app.flashes %}
+                {% for message in messages %}
+                    <div class="alert alert-dismissible alert-{{ label }}">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        <i class="fa fa-feather-alt"></i> {{ message }} 
+                    </div>
+               {% endfor %}
+            {% endfor %}
             {% block body %}{% endblock %}
         </main>
         {% include 'footer.html.twig' %}

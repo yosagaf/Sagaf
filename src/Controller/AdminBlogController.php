@@ -112,15 +112,16 @@ class AdminBlogController extends AbstractController
     }
 
     /**
-     * @Route("/admin/blogs/{id_blog}/comment/{id}/delete", name="admin_blogs_comment_delete")
+     * @Route("/admin/blogs/comment/{id}/delete", name="admin_blogs_comment_delete")
      */
-    public function deleteComment(Blog $blog, Comment $comment, ObjectManager $manager, Filesystem $fileSystem)
+    public function deleteComment(Comment $comment, ObjectManager $manager, Filesystem $fileSystem)
     {
+        $id = $comment->getBlog()->getId();
         $manager->remove($comment);
         $manager->flush();
         $this->addFlash('success', 'Commentaire supprimé');
         return $this->redirectToRoute('admin_blogs_edit', array(
-            'id_blog' => $blog
+            'id' => $id
         ));
     }
 

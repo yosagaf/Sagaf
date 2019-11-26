@@ -2,9 +2,14 @@
 
 namespace App\Controller;
 
+use App\Entity\Blog;
 use App\Entity\Work;
+use App\Entity\Comment;
+use App\Form\CommentType;
 use App\Repository\BlogRepository;
 use App\Repository\WorkRepository;
+use Symfony\Component\HttpFoundation\Request;
+use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -49,6 +54,35 @@ class IndexController extends AbstractController
         $blogs = $repo->findAll();
         return $this->render('index/blog.html.twig', [
             'blogs' => $blogs
+        ]);
+    }
+
+    /**
+     * @Route("/blog/{id}", name="blog_details")
+     */
+    public function blogDetails(Request $request, ObjectManager $manager, Blog $blog)
+    {
+        $comment = new Comment();
+        $form = $this->createForm(CommentType::class, $comment);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            
+            $comment->setDate(new \DateTime('now'));
+            $comment->setBlog($blog);
+
+            $manager->persist($comment);
+            $manager->flush();
+
+            $this->addFlash('success', 'Comment create');
+
+            return $this->redirectToRoute('blog_details', ['id' => $blog->getId()]);
+        }
+
+        return $this->render('index/blog_details.html.twig', [
+            'form' => $form->createView(),
+            'blog' => $blog
         ]);
     }
 

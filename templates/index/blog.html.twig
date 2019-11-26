@@ -4,8 +4,6 @@
 
 <div class="row">
 
-    
-
         <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 ">
 
             <article role="pge-title-content" class="blog-header">
@@ -30,7 +28,7 @@
 
                     <section class="blog-content">
 
-                        <a href="blog-details.html">
+                        <a href="{{ path('blog_details', {'id': blog.id}) }}">
 
                         <figure>
 
@@ -80,7 +78,7 @@
 
                     <section class="blog-content">
 
-                        <a href="blog-details.html">
+                        <a href="{{ path('blog_details', {'id': blog.id}) }}">
 
                         <figure>
 
@@ -115,18 +113,6 @@
             </ul>
 
         </div>
-
-        
-
-        
-
-        
-
-       
-
-        
-
-        
 
     </div>
 {% endblock %}

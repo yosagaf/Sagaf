@@ -382,7 +382,7 @@ article[role="pge-title-content"].contact-header p a:hover{color:#00adb5; text-d
 
 .commentys-form input[type="text"]:focus,.commentys-form input[type="email"]:focus,.commentys-form input[type="url"]:focus,.commentys-form textarea:focus{ border-bottom-color:#000}
 
-.commentys-form input[type="button"]{ padding:0 36px; text-transform:uppercase; display:inline-block; font-size:21px; line-height:60px; color:#FFF; font-weight: bold; text-align:center; border:none; outline:none; background-color:#00adb5; margin-top:50px}
+.commentys-form input[type="submit"]{ padding:0 36px; text-transform:uppercase; display:inline-block; font-size:21px; line-height:60px; color:#FFF; font-weight: bold; text-align:center; border:none; outline:none; background-color:#00adb5; margin-top:50px}
 
-.commentys-form input[type="button"]:hover{ background-color:#ff5c5c}
+.commentys-form input[type="submit"]:hover{ background-color:#ff5c5c}
 

@@ -1,0 +1,115 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="blog-details">
+
+        <article class="post-details" id="post-details">
+
+            <header role="bog-header" class="bog-header text-center">
+
+                <h3><span>{{ blog.date|date("d", "Europe/Paris") }}</span> {{ blog.date|date("m Y", "Europe/Paris") }}</h3>
+
+                <h2> {{ blog.title }} </h2>
+
+            </header>
+
+            
+
+            <figure>
+
+                <img src="{{ asset('assets/uploads/' ~ blog.data.name) }}" alt="{{ blog.title }}" class="img-responsive"/>
+
+            </figure>
+
+            
+
+            <div class="enter-content">
+
+                {{ blog.text }}
+
+            </div>
+
+        </article>
+
+        
+
+     <!-- Comments -->
+
+    <div class="comments-pan">
+
+        <h3>{{ blog.comments|length }} Comment{{ blog.comments|length > 1 ? 's' : '' }}</h3>
+
+        <ul class="comments-reply">
+
+            {% for comment in blog.comments %}
+            <li>
+
+                <section>
+
+                    <h4>{{ comment.name }} {{ comment.firstName }}</h4>
+
+                    <div class="date-pan">{{ blog.date|date("d/m/Y", "Europe/Paris") }}</div>
+
+                    {{ comment.text }}
+
+                </section>
+
+                
+
+            </li>
+            {% endfor %}
+
+        </ul>
+
+        
+
+        <div class="commentys-form">
+
+            <h4>Leave a comment</h4>
+
+            
+
+            <div class="row">                
+
+                {{ form_start(form) }}
+
+                    <div class="col-xs-12 col-sm-6 col-md-6">
+
+                        {{ form_row(form.name, {'attr': {'placeholder': 'Whats your name *'}}) }}
+
+                    </div>
+
+                    <div class="col-xs-12 col-sm-6 col-md-6">
+
+                        {{ form_row(form.firstName, {'attr': {'placeholder': 'Whats your first name *'}}) }}
+
+                    </div>
+
+                    <div class="clearfix"></div>
+
+                     <div class="col-xs-12 col-sm-12 col-md-12">
+
+                        {{ form_row(form.text, {'attr': {'placeholder': 'Whats in your mind *'}}) }}
+
+                    </div>
+
+                    <div class="text-center">
+
+                        <input name="" type="submit" value="Post Comment">
+
+                    </div>
+
+                {{ form_end(form) }}
+
+            </div>
+
+        </div>
+
+        
+
+    </div>
+
+        
+
+    </div>
+{% endblock %}
