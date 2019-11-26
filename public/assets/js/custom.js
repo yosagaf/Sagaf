@@ -21,7 +21,7 @@ if(sections){
     var j = 1;
 		for(var i = number_child; i > Math.round(number_child/2); i-- ){
       if(j + number_child_bis <= 8){
-        insertAfter(section.lastElementChild.lastElementChild.cloneNode(true), section_bis.lastElementChild);
+        insertAfter(section.lastElementChild.lastElementChild.cloneNode(true), section_bis.lastElementChild.lastElementChild);
         section.lastElementChild.removeChild(section.lastElementChild.lastElementChild);
       }
       j++;
