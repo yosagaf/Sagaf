@@ -2,8 +2,10 @@ $( document ).ready(function() {
 
 // Reorganize images
 var sections = document.getElementsByClassName("reorganize");
-if(sections){
-	var length = sections.length;
+var length = sections.length;
+
+if(length > 0){
+	
 	if(length%2 != 0){
 		var section = sections[length - 1];
 		var section_bis = section.cloneNode(true);
