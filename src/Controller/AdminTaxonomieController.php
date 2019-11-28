@@ -19,6 +19,7 @@ class AdminTaxonomieController extends AbstractController
      */
     public function about(Request $request, EntityManagerInterface $manager, TaxonomieRepository $repo, Filesystem $fileSystem)
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $about = $repo->findOneBy(array('page' => 'about'));
 
         if(!$about){
@@ -91,6 +92,7 @@ class AdminTaxonomieController extends AbstractController
      */
     public function parameters(Request $request, EntityManagerInterface $manager, TaxonomieRepository $repo)
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $parameters = $repo->findOneBy(array('page' => 'parameters'));
 
         if(!$parameters){

@@ -20,6 +20,10 @@
 
             <ul>
 
+                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                <li class="{{ currentPath == path('admin_works') ? 'nav-active' : '' }}"><a href="{{ path('admin_works') }}" title="Work">Admin</a></li>
+                {% endif %}
+
                 <li class="{{ currentPath == path('index') ? 'nav-active' : '' }}"><a href="{{ path('index') }}" title="Work">Work</a></li>
 
                 <li class="{{ currentPath == path('about') ? 'nav-active' : '' }}"><a href="{{ path('about') }}" title="About">About</a></li>

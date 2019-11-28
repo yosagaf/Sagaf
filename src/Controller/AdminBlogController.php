@@ -22,6 +22,7 @@ class AdminBlogController extends AbstractController
      */
     public function index(BlogRepository $repo)
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $blogs = $repo->findAll();
         return $this->render('admin_blog/index.html.twig', [
             'blogs' => $blogs
@@ -34,6 +35,7 @@ class AdminBlogController extends AbstractController
      */
     public function manage(Request $request, EntityManagerInterface $manager, Blog $blog = null, Filesystem $fileSystem)
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         if (!$blog) {
             $blog = new blog();
         }
@@ -104,6 +106,7 @@ class AdminBlogController extends AbstractController
      */
     public function delete(Blog $blog, EntityManagerInterface $manager, Filesystem $fileSystem)
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $fileSystem->remove($this->getParameter('data_directory').'/'.$blog->getData()->getName());
         $manager->remove($blog);
         $manager->flush();
@@ -116,6 +119,7 @@ class AdminBlogController extends AbstractController
      */
     public function deleteComment(Comment $comment, EntityManagerInterface $manager, Filesystem $fileSystem)
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $id = $comment->getBlog()->getId();
         $manager->remove($comment);
         $manager->flush();

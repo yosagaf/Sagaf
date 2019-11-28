@@ -21,6 +21,7 @@ class AdminController extends AbstractController
      */
     public function index(WorkRepository $repo)
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $works = $repo->findAll();
         return $this->render('admin/index.html.twig', [
             'works' => $works
@@ -33,6 +34,7 @@ class AdminController extends AbstractController
      */
     public function manage(Request $request, EntityManagerInterface $manager, Work $work = null, Filesystem $fileSystem)
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         if (!$work) {
             $work = new Work();
         }
@@ -100,6 +102,7 @@ class AdminController extends AbstractController
      */
     public function delete(Work $work, EntityManagerInterface $manager, Filesystem $fileSystem)
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $fileSystem->remove($this->getParameter('data_directory').'/'.$work->getData()->getName());
         $manager->remove($work);
         $manager->flush();

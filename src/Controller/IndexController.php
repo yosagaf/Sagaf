@@ -126,7 +126,22 @@ class IndexController extends AbstractController
             $email = $form->get('email')->getData();
             $text = $form->get('text')->getData();
 
-            $message = (new \Swift_Message('Contact sagaf-youssouf.com'))
+            $subject = 'Contact site Sagaf Youssouf';
+
+            $message = '<strong>Nom : </strong>'.$name.'<br/><br/>';
+
+            $message .= '<strong>Email : </strong>'.$email.'<br/><br/>';
+
+            $message .= $text.'<br/>';
+
+            $header="MIME-Version: 1.0\r\n";
+            $header.='From:"LucienBrd"<no-reply@lucien-brd.com>'."\n";
+            $header.='Content-Type:text/html; charset="uft-8"'."\n";
+            $header.='Content-Transfer-Encoding: 8bit';
+
+            mail($parameters->getText(),$subject,$message,$header);
+
+            /*$message = (new \Swift_Message('Contact sagaf-youssouf.com'))
                 ->setFrom('support@sagaf-youssouf.com')
                 ->setTo($parameters->getText())
                 ->setBody(
@@ -137,7 +152,7 @@ class IndexController extends AbstractController
                     ]),
                     'text/html'
                 );
-            $mailer->send($message);
+            $mailer->send($message);*/
 
             $this->addFlash('success', 'Email sended');
             return $this->redirectToRoute('contact');
