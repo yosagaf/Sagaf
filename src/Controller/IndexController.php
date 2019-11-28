@@ -5,13 +5,14 @@ namespace App\Controller;
 use App\Entity\Blog;
 use App\Entity\Work;
 use App\Entity\Comment;
+use App\Entity\Taxonomie;
 use App\Form\CommentType;
 use App\Form\ContactType;
 use App\Repository\BlogRepository;
 use App\Repository\WorkRepository;
 use App\Repository\TaxonomieRepository;
-use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
