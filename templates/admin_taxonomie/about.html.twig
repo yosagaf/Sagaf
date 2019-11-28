@@ -1,0 +1,21 @@
+{% extends "admin.html.twig" %}
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+{% block body %}
+<h1>
+    Modification about
+</h1>
+
+{{ form_start(form) }}
+{{ form_row(form.text, {'label': 'About you', 'attr': {'placeholder': 'About you'}}) }}
+{% if about.data %}
+<img width="200" src="{{ asset('assets/uploads/' ~ about.data.name) }}" alt="Card image">
+{% endif %}
+{{ form_row(form.data.name, {'label': 'Choisir un fichier', 'required': false}) }}
+
+<button type="submit" class="btn btn-outline-success">
+    Modifier
+</button>
+
+{{ form_end(form) }}
+
+{% endblock body %}

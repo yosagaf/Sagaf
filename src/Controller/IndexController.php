@@ -8,6 +8,7 @@ use App\Entity\Comment;
 use App\Form\CommentType;
 use App\Repository\BlogRepository;
 use App\Repository\WorkRepository;
+use App\Repository\TaxonomieRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Routing\Annotation\Route;
@@ -39,10 +40,21 @@ class IndexController extends AbstractController
     /**
      * @Route("/about", name="about")
      */
-    public function about()
+    public function about(ObjectManager $manager, TaxonomieRepository $repo)
     {
-        return $this->render('index/about.html.twig', [
+        $about = $repo->findOneBy(array('page' => 'about'));
+
+        if(!$about){
+            $about = new Taxonomie();
+            $about->setPage('about')
+                    ->setText('About me');
             
+            $manager->persist($about);
+            $manager->flush();
+        }
+
+        return $this->render('index/about.html.twig', [
+            'about' => $about
         ]);
     }
 

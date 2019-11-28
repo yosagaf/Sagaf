@@ -69,7 +69,8 @@ class AdminController extends AbstractController
                         $fileName
                     );
                 } catch (FileException $e) {
-                    // ... handle exception if something happens during file upload
+                    $this->addFlash('error', 'Une erreur est survenue');
+                    return $this->redirectToRoute('admin_works');
                 }
                 $work->getData()->setName($fileName);
             }
