@@ -7,7 +7,7 @@ use App\Form\WorkType;
 use App\Repository\WorkRepository;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -31,7 +31,7 @@ class AdminController extends AbstractController
      * @Route("/admin/works/new", name="admin_works_create")
      * @Route("/admin/works/{id}/edit", name="admin_works_edit")
      */
-    public function manage(Request $request, ObjectManager $manager, Work $work = null, Filesystem $fileSystem)
+    public function manage(Request $request, EntityManagerInterface $manager, Work $work = null, Filesystem $fileSystem)
     {
         if (!$work) {
             $work = new Work();
@@ -98,7 +98,7 @@ class AdminController extends AbstractController
     /**
      * @Route("/admin/works/{id}/delete", name="admin_works_delete")
      */
-    public function delete(Work $work, ObjectManager $manager, Filesystem $fileSystem)
+    public function delete(Work $work, EntityManagerInterface $manager, Filesystem $fileSystem)
     {
         $fileSystem->remove($this->getParameter('data_directory').'/'.$work->getData()->getName());
         $manager->remove($work);

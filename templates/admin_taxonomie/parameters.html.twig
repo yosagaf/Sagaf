@@ -1,0 +1,17 @@
+{% extends "admin.html.twig" %}
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+{% block body %}
+<h1>
+    Modification parameters
+</h1>
+
+{{ form_start(form) }}
+{{ form_row(form.text, {'label': 'Email', 'attr': {'placeholder': 'Email'}}) }}
+
+<button type="submit" class="btn btn-outline-success">
+    Modifier
+</button>
+
+{{ form_end(form) }}
+
+{% endblock body %}

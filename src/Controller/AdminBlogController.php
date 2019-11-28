@@ -8,7 +8,7 @@ use App\Entity\Comment;
 use App\Repository\BlogRepository;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -32,7 +32,7 @@ class AdminBlogController extends AbstractController
      * @Route("/admin/blogs/new", name="admin_blogs_create")
      * @Route("/admin/blogs/{id}/edit", name="admin_blogs_edit")
      */
-    public function manage(Request $request, ObjectManager $manager, Blog $blog = null, Filesystem $fileSystem)
+    public function manage(Request $request, EntityManagerInterface $manager, Blog $blog = null, Filesystem $fileSystem)
     {
         if (!$blog) {
             $blog = new blog();
@@ -102,7 +102,7 @@ class AdminBlogController extends AbstractController
     /**
      * @Route("/admin/blogs/{id}/delete", name="admin_blogs_delete")
      */
-    public function delete(Blog $blog, ObjectManager $manager, Filesystem $fileSystem)
+    public function delete(Blog $blog, EntityManagerInterface $manager, Filesystem $fileSystem)
     {
         $fileSystem->remove($this->getParameter('data_directory').'/'.$blog->getData()->getName());
         $manager->remove($blog);
@@ -114,7 +114,7 @@ class AdminBlogController extends AbstractController
     /**
      * @Route("/admin/blogs/comment/{id}/delete", name="admin_blogs_comment_delete")
      */
-    public function deleteComment(Comment $comment, ObjectManager $manager, Filesystem $fileSystem)
+    public function deleteComment(Comment $comment, EntityManagerInterface $manager, Filesystem $fileSystem)
     {
         $id = $comment->getBlog()->getId();
         $manager->remove($comment);

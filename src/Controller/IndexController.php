@@ -6,11 +6,12 @@ use App\Entity\Blog;
 use App\Entity\Work;
 use App\Entity\Comment;
 use App\Form\CommentType;
+use App\Form\ContactType;
 use App\Repository\BlogRepository;
 use App\Repository\WorkRepository;
 use App\Repository\TaxonomieRepository;
 use Symfony\Component\HttpFoundation\Request;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -40,7 +41,7 @@ class IndexController extends AbstractController
     /**
      * @Route("/about", name="about")
      */
-    public function about(ObjectManager $manager, TaxonomieRepository $repo)
+    public function about(EntityManagerInterface $manager, TaxonomieRepository $repo)
     {
         $about = $repo->findOneBy(array('page' => 'about'));
 
@@ -72,7 +73,7 @@ class IndexController extends AbstractController
     /**
      * @Route("/blog/{id}", name="blog_details")
      */
-    public function blogDetails(Request $request, ObjectManager $manager, Blog $blog)
+    public function blogDetails(Request $request, EntityManagerInterface $manager, Blog $blog)
     {
         $comment = new Comment();
         $form = $this->createForm(CommentType::class, $comment);
@@ -101,10 +102,51 @@ class IndexController extends AbstractController
     /**
      * @Route("/contact", name="contact")
      */
-    public function contact()
+    public function contact(Request $request, EntityManagerInterface $manager, TaxonomieRepository $repo, \Swift_Mailer $mailer)
     {
-        return $this->render('index/contact.html.twig', [
+        $parameters = $repo->findOneBy(array('page' => 'parameters'));
+
+        if(!$parameters){
+            $parameters = new Taxonomie();
+            $parameters->setPage('parameters')
+                    ->setText('contact@sagaf-youssouf.com');
             
+            $manager->persist($parameters);
+            $manager->flush();
+        }
+
+        $data = ['name' => null, 'email' => null, 'text' => null];
+        $form = $this->createForm(ContactType::class, $data);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $name = $form->get('name')->getData();
+            $email = $form->get('email')->getData();
+            $text = $form->get('text')->getData();
+
+            $message = (new \Swift_Message('Contact sagaf-youssouf.com'))
+                ->setFrom('support@sagaf-youssouf.com')
+                ->setTo($parameters->getText())
+                ->setBody(
+                    $this->renderView('index/email.html.twig',[
+                        'name' => $name,
+                        'email' => $email,
+                        'text' => $text
+                    ]),
+                    'text/html'
+                );
+            $mailer->send($message);
+
+            $this->addFlash('success', 'Email sended');
+            return $this->redirectToRoute('contact');
+
+        }
+
+        return $this->render('index/contact.html.twig', [
+            'form' => $form->createView(),
+            'parameters' => $parameters
         ]);
     }
 }

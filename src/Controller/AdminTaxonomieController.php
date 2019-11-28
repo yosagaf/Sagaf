@@ -7,8 +7,9 @@ use App\Form\TaxonomieType;
 use App\Repository\TaxonomieRepository;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class AdminTaxonomieController extends AbstractController
@@ -16,7 +17,7 @@ class AdminTaxonomieController extends AbstractController
     /**
      * @Route("/admin/about", name="admin_about")
      */
-    public function about(Request $request, ObjectManager $manager, TaxonomieRepository $repo, Filesystem $fileSystem)
+    public function about(Request $request, EntityManagerInterface $manager, TaxonomieRepository $repo, Filesystem $fileSystem)
     {
         $about = $repo->findOneBy(array('page' => 'about'));
 
@@ -75,6 +76,7 @@ class AdminTaxonomieController extends AbstractController
             $manager->flush();
 
             $this->addFlash('success', 'About modifié');
+            return $this->redirectToRoute('admin_about');
 
         }
 
@@ -87,10 +89,39 @@ class AdminTaxonomieController extends AbstractController
     /**
      * @Route("/admin/parameters", name="admin_parameters")
      */
-    public function parameters()
+    public function parameters(Request $request, EntityManagerInterface $manager, TaxonomieRepository $repo)
     {
-        return $this->render('admin_taxonomie/index.html.twig', [
-            'controller_name' => 'AdminTaxonomieController',
+        $parameters = $repo->findOneBy(array('page' => 'parameters'));
+
+        if(!$parameters){
+            $parameters = new Taxonomie();
+            $parameters->setPage('parameters')
+                    ->setText('contact@sagaf-youssouf.com');
+            
+            $manager->persist($parameters);
+            $manager->flush();
+        }
+
+        $form = $this->createForm(TaxonomieType::class, $parameters);
+
+        $form->remove('data');
+        $form->add('text', EmailType::class);
+        
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $manager->persist($parameters);
+            $manager->flush();
+
+            $this->addFlash('success', 'Parameters modifié');
+            return $this->redirectToRoute('admin_parameters');
+
+        }
+
+        return $this->render('admin_taxonomie/parameters.html.twig', [
+            'form' => $form->createView(),
+            'parameters' => $parameters
         ]);
     }
 

@@ -16,7 +16,7 @@
 
                 </header>
 
-                <p><a href="tel:8197654321"><i class="fa fa-phone" aria-hidden="true"></i> +8197654321</a><a href="mailto:contact@avana.com"><i class="fa fa-envelope" aria-hidden="true"></i> contact@avana.com</a></p>
+                <p><a href="mailto:{{ parameters.text }}"><i class="fa fa-envelope" aria-hidden="true"></i> {{ parameters.text }}</a></p>
 
             </article>
 
@@ -41,7 +41,7 @@
         
 
        <!-- contat-from-wrapper -->
-
+       {{ form_start(form) }}
        <div class="contat-from-wrapper">
 
                  <div id="message"></div>
@@ -52,13 +52,13 @@
 
                         <div class="col-md-6 col-lg-6 col-sm-6 col-xs-12">
 
-                        <input  name="name" id="name" type="text" placeholder="Whats your name">
+                        {{ form_row(form.name, {'attr': {'placeholder': 'Whats your name *'}}) }}
 
                         </div>
 
                         <div class="col-md-6 col-lg-6 col-sm-6 col-xs-12">
 
-                        <input  name="email" id="email" type="email"  placeholder="Whats your email">
+                        {{ form_row(form.email, {'attr': {'placeholder': 'Whats your email *'}}) }}
 
                         </div>
 
@@ -66,7 +66,7 @@
 
                     <div class="clearfix"></div>
 
-                    <textarea name="comments" id="comments" cols="" rows="" placeholder="Whats in your mind"></textarea>
+                    {{ form_row(form.text, {'attr': {'placeholder': 'Whats in your mind *'}}) }}
 
                     <div class="clearfix"></div>
 
@@ -77,7 +77,7 @@
                 </form>
 
        </div>
-
+       {{ form_end(form) }}
        <!-- contat-from-wrapper -->  
 
     </div>
