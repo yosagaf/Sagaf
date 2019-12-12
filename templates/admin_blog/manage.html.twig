@@ -11,7 +11,7 @@
 
 {{ form_start(form) }}
 {{ form_row(form.title, {'label': 'Titre', 'attr': {'placeholder': 'Titre'}}) }}
-{{ form_row(form.text, {'label': 'Texte', 'attr': {'placeholder': 'Texte'}}) }}
+{{ form_row(form.text, {'label': 'Texte', 'attr': {'placeholder': 'Texte', 'class': 'text_area'}}) }}
 {% if editMode %}
 <img width="200" src="{{ asset('assets/uploads/' ~ blog.data.name) }}" alt="Card image">
 {% endif %}

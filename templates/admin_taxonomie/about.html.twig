@@ -6,7 +6,7 @@
 </h1>
 
 {{ form_start(form) }}
-{{ form_row(form.text, {'label': 'About you', 'attr': {'placeholder': 'About you'}}) }}
+{{ form_row(form.text, {'label': 'About you', 'attr': {'placeholder': 'About you', 'class': 'text_area'}}) }}
 {% if about.data %}
 <img width="200" src="{{ asset('assets/uploads/' ~ about.data.name) }}" alt="Card image">
 {% endif %}
