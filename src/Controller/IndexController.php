@@ -40,6 +40,25 @@ class IndexController extends AbstractController
     }
 
     /**
+     * @Route("/CV", name="cv")
+     */
+    public function indexCV(EntityManagerInterface $manager, TaxonomieRepository $repo)
+    {
+        $cv = $repo->findOneBy(array('page' => 'cv'));
+
+        if(!$cv){
+            $about = new Taxonomie();
+            $about->setPage('cv');
+            
+            $manager->persist($cv);
+            $manager->flush();
+        }
+        return $this->render('index/cv.html.twig', [
+            'cv' => $cv
+        ]);
+    }
+
+    /**
      * @Route("/about", name="about")
      */
     public function about(EntityManagerInterface $manager, TaxonomieRepository $repo)

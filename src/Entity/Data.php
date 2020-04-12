@@ -19,11 +19,11 @@ class Data
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank(message="Le fichier doit être une image.")
+     * @Assert\NotBlank(message="Le fichier doit être une image (ou un pdf pour le cv).")
      * @Assert\File(
-     *  maxSize = "1024k",
-     *  maxSizeMessage = "Le fichier doit faire moins de 1mo.",
-     *  mimeTypes={ "image/png", "image/jpeg" }
+     *  maxSize = "61440k",
+     *  maxSizeMessage = "Le fichier doit faire moins de 60mo.",
+     *  mimeTypes={ "image/png", "image/jpeg", "application/pdf" }
      * )
      */
     private $name;

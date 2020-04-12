@@ -1,0 +1,20 @@
+{% extends "admin.html.twig" %}
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+{% block body %}
+<h1>
+    Modification cv
+</h1>
+
+{{ form_start(form) }}
+{% if cv.data %}
+<iframe src="{{ asset('assets/uploads/' ~ cv.data.name) }}"></iframe>
+{% endif %}
+{{ form_row(form.data.name, {'label': 'Choisir un fichier', 'required': false}) }}
+
+<button type="submit" class="btn btn-outline-success">
+    Modifier
+</button>
+
+{{ form_end(form) }}
+
+{% endblock body %}

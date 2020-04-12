@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+<div class="row">
+
+    
+
+        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 ">
+
+            <article role="pge-title-content" class="contact-header">
+
+                <header>
+
+                    <h2><span>My CV!</span></h2>
+
+                </header>
+
+                <p><a href="{{ asset('assets/uploads/' ~ cv.data.name) }}" download><i class="fa fa-download" aria-hidden="true"></i> Download</a></p>
+
+            </article>
+
+        </div>
+
+        <section class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+            <embed src="{{ asset('assets/uploads/' ~ cv.data.name) }}"></embed>
+        </section>
+
+</div>
+
+{% endblock %}

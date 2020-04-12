@@ -128,6 +128,80 @@ class AdminTaxonomieController extends AbstractController
     }
 
     /**
+     * @Route("/admin/cv", name="admin_cv")
+     */
+    public function cv(Request $request, EntityManagerInterface $manager, TaxonomieRepository $repo, Filesystem $fileSystem)
+    {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $cv = $repo->findOneBy(array('page' => 'cv'));
+
+        if(!$cv){
+            $cv = new Taxonomie();
+            $cv->setPage('cv');
+            
+            $manager->persist($cv);
+            $manager->flush();
+        }
+
+        if($cv->getData()){
+            $name = $cv->getData()->getName();
+        } else {
+            $name = null;
+        }
+
+        $form = $this->createForm(TaxonomieType::class, $cv);
+
+        $form->remove('text');
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $noneChange = false;
+            if($cv->getData()->getName() != null){
+                if($name){
+                    $fileSystem->remove($this->getParameter('data_directory').'/'.$name);
+                }
+                
+            } elseif($cv->getData()->getName() == null){
+                $cv->getData()->setName($name);
+                $noneChange = true;
+            }
+
+            if(!$noneChange){
+                /** @var Symfony\Component\HttpFoundation\File\UploadedFile $file */
+                $file = $cv->getData()->getName();
+
+                $fileName = $this->generateUniqueFileName().'.'.$file->guessExtension();
+
+                $cv->getData()->setExtension($file->guessExtension());
+                // Move the file to the directory where brochures are stored
+                try {
+                    $file->move(
+                        $this->getParameter('data_directory'),
+                        $fileName
+                    );
+                } catch (FileException $e) {
+                    $this->addFlash('error', 'Une erreur est survenue');
+                    return $this->redirectToRoute('admin_cv');
+                }
+                $cv->getData()->setName($fileName);
+            }
+
+            $manager->persist($cv);
+            $manager->flush();
+
+            $this->addFlash('success', 'CV modifié');
+            return $this->redirectToRoute('admin_cv');
+
+        }
+
+        return $this->render('admin_taxonomie/cv.html.twig', [
+            'form' => $form->createView(),
+            'cv' => $cv
+        ]);
+    }
+
+    /**
      * @return string
      */
     private function generateUniqueFileName()
