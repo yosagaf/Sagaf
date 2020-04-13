@@ -48,8 +48,8 @@ class IndexController extends AbstractController
         $cv = $repo->findOneBy(array('page' => 'cv'));
 
         if(!$cv){
-            $about = new Taxonomie();
-            $about->setPage('cv');
+            $cv = new Taxonomie();
+            $cv->setPage('cv');
             
             $manager->persist($cv);
             $manager->flush();
