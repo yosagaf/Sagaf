@@ -141,7 +141,7 @@ class IndexController extends AbstractController
         if(!$parameters){
             $parameters = new Taxonomie();
             $parameters->setPage('parameters')
-                    ->setText('contact@sagaf-youssouf.com');
+                    ->setText('contact@yosagaf.fr');
             
             $manager->persist($parameters);
             $manager->flush();
