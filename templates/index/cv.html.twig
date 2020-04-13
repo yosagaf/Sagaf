@@ -16,15 +16,18 @@
 
                 </header>
 
+                {% if cv.data %}
                 <p><a href="{{ asset('assets/uploads/' ~ cv.data.name) }}" download><i class="fa fa-download" aria-hidden="true"></i> Download</a></p>
-
+                {% endif %}
             </article>
 
         </div>
 
+        {% if cv.data %}
         <section class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
             <embed src="{{ asset('assets/uploads/' ~ cv.data.name) }}"></embed>
         </section>
+        {% endif %}
 
 </div>
 
