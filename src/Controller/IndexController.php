@@ -12,6 +12,7 @@ use App\Repository\BlogRepository;
 use App\Repository\WorkRepository;
 use App\Repository\TaxonomieRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\CertificateRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -55,6 +56,17 @@ class IndexController extends AbstractController
         }
         return $this->render('index/cv.html.twig', [
             'cv' => $cv
+        ]);
+    }
+
+    /**
+     * @Route("/certificates", name="certificates")
+     */
+    public function indexCertificates(CertificateRepository $repo)
+    {
+        $certificates = $repo->findAll();
+        return $this->render('index/certificates.html.twig', [
+            'certificates' => $certificates
         ]);
     }
 
