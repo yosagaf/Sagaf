@@ -121,6 +121,10 @@ embed {
 	height: 500px;
 }
 
+p {
+	text-align: justify;
+}
+
 #logo {
 
 	width: 150px;
