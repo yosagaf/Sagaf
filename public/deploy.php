@@ -18,7 +18,7 @@
 		'git submodule sync',
 		'git submodule update',
 		'git submodule status',
-		'/usr/local/php7.1/bin/php bin/console cache:clear',
+		'/usr/local/php7.1/bin/php ../bin/console cache:clear',
 	);
 	// Run the commands for output
 	$output = '';
