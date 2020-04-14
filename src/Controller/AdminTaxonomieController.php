@@ -98,7 +98,7 @@ class AdminTaxonomieController extends AbstractController
         if(!$parameters){
             $parameters = new Taxonomie();
             $parameters->setPage('parameters')
-                    ->setText('contact@sagaf-youssouf.com');
+                    ->setText('contact@yosagaf.com');
             
             $manager->persist($parameters);
             $manager->flush();
