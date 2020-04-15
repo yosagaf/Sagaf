@@ -1,5 +1,9 @@
 {% extends 'base.html.twig' %}
 
+{% block desc %}{{ blog.title }}{% endblock %}
+
+{% block keywords %}{{ parent() }}, {{ blog.title }}{% endblock %}
+
 {% block body %}
 <div class="blog-details">
 
