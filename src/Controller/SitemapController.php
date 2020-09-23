@@ -26,7 +26,6 @@ class SitemapController extends AbstractController
         $urls[] = ['loc' => $this->generateUrl('cv')];
         $urls[] = ['loc' => $this->generateUrl('certificates')];
         $urls[] = ['loc' => $this->generateUrl('about')];
-        $urls[] = ['loc' => $this->generateUrl('blog')];
         $urls[] = ['loc' => $this->generateUrl('contact')];
 
         // Add dynamique URL from the blog
